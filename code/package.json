@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.16.1",
+    "@types/papaparse": "^5.3.14",
+    "commander": "^12.1.0",
+    "csv-parser": "^3.0.0",
+    "neo4j-driver": "5.22",
+    "nodemon": "^3.1.4",
+    "papaparse": "^5.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "build:watch": "tsc -w",
+    "build:live": "nodemon"
+  }
+}

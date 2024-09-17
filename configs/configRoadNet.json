@@ -1,0 +1,41 @@
+{
+    "graphName": "RoadNet",
+    "NodeLabel": "RoadNetNode",
+    "EdgeLabel": "RoadNetEdge",
+    "queryFilter": {
+        "nodeLabel": "RoadNetNode",
+        "fieldName": "NodeId",
+        "value": 1900000
+    },
+    "queryFilterExt": {
+        "nodeLabel": "RoadNetNode",
+        "edgeLabel": "RoadNetEdge",
+        "degree": 10
+    },
+    "queryFilterSum": {
+        "nodeLabel": "RoadNetNode",
+        "edgeLabel": "RoadNetEdge"
+    },
+    "queryShortestPath": {
+        "fromNodeLabel": "RoadNetNode",
+        "toNodeLabel": "RoadNetNode",
+        "fromFieldName": "NodeId",
+        "toFieldName": "NodeId",
+        "fromValue": 1518143,
+        "toValue": 1517205,
+        "pathLengthLimit": 1000
+    },
+    "queryTriangles": {
+        "nodeLabel": "RoadNetNode",
+        "edgeLabel": "RoadNetEdge"
+    },
+    "queryDFS_BFS": {
+        "fromLabel": "RoadNetNode",
+        "fromFieldName": "NodeId",
+        "fromValue":  562818,
+        "edgeLabel": "RoadNetEdge",
+        "fieldName": "NodeId",
+        "value": 562818,
+        "depth": 15
+    }
+}

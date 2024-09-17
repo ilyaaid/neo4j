@@ -1,0 +1,46 @@
+{
+  "graphName": "Elliptic",
+  "TransactionLabel": "EllipticTransaction",
+
+  "EdgeLabel": "EllipticEdge",
+  "queryFilter": {
+    "nodeLabel": "EllipticTransaction",
+    "fieldName": "size",
+    "value": 3214
+  },
+  "queryFilterExt": {
+    "nodeLabel": "EllipticTransaction",
+    "edgeLabel": "EllipticEdge",
+    "fieldName": "size",
+    "value": 10.0,
+    "degree": 8
+  },
+  "queryFilterSum": {
+    "nodeLabel": "EllipticTransaction",
+    "edgeLabel": "EllipticEdge",
+    "fieldName": "size",
+    "value": 602
+  }, 
+  "queryShortestPath": {
+    "fromNodeLabel": "EllipticTransaction",
+    "toNodeLabel": "EllipticTransaction",
+    "fromFieldName": "txId",
+    "toFieldName": "txId",
+    "fromValue": 10853450,
+    "toValue": 157642505,
+    "pathLengthLimit": 1000
+  },
+  "queryTriangles": {
+    "nodeLabel": "EllipticTransaction",
+    "edgeLabel": "EllipticEdge"
+  },
+  "queryDFS_BFS": {
+    "fromLabel": "EllipticTransaction",
+    "fromFieldName": "txId",
+    "fromValue": 2984918,
+    "edgeLabel": "EllipticEdge",
+    "fieldName" : "size",
+    "value" : 10,
+    "depth": 50
+  }
+}

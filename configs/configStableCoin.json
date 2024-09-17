@@ -1,0 +1,45 @@
+{
+    "graphName": "StableCoin",
+    "AddressLabel": "StableCoinAddress",
+    "ActionLabel": "StableCoinAction",
+    "queryFilter": {
+        "edgeLabel": "StableCoinAction",
+        "fieldName": "value",
+        "value": 101000000
+    },
+    "queryFilterExt": {
+        "nodeLabel": "StableCoinAddress",
+        "edgeLabel": "StableCoinAction",
+        "fieldName": "value",
+        "value": 493112.608952,
+        "degree": 5
+    },
+    "queryFilterSum": {
+        "nodeLabel": "StableCoinAddress",
+        "edgeLabel": "StableCoinAction",
+        "fieldName": "value",
+        "value": 300000
+    },
+    "queryShortestPath": {
+        "fromNodeLabel": "StableCoinAddress",
+        "toNodeLabel": "StableCoinAddress",
+        "fromFieldName": "addressId",
+        "toFieldName": "addressId",
+        "fromValue": "\"0x5f407a10e031c0f4b6c2286089023b01267bb01c\"",
+        "toValue": "\"0x2027a4a5884d7c511dfb542d5c68650471564215\"",
+        "pathLengthLimit": 1000
+    },
+    "queryTriangles": {
+        "nodeLabel": "StableCoinAddress",
+        "edgeLabel": "StableCoinAction"
+    },
+    "queryDFS_BFS": {
+        "fromLabel": "StableCoinAddress",
+        "fromFieldName": "addressId",
+        "fromValue": "\"0x74de5d4fcbf63e00296fd95d33236b9794016631\"",
+        "edgeLabel": "StableCoinAction",
+        "fieldName": "time_stamp",
+        "value": 1653000000,
+        "depth": 3
+    }
+}

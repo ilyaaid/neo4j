@@ -1,0 +1,46 @@
+{
+    "graphName": "Mooc",
+    "UserLabel": "MoocUser",
+    "TargetLabel": "MoocTarget",
+    "ActionLabel": "MoocAction",
+    "queryFilter": {
+        "edgeLabel": "MoocAction",
+        "fieldName": "TIMESTAMP",
+        "value": 2571264
+    },
+    "queryFilterExt": {
+        "nodeLabel": "MoocUser",
+        "edgeLabel": "MoocAction",
+        "fieldName": "TIMESTAMP",
+        "value": 2571264,
+        "degree": 2
+    },
+    "queryFilterSum": {
+        "nodeLabel": "MoocUser",
+        "edgeLabel": "MoocAction",
+        "fieldName": "TIMESTAMP",
+        "value": 2571264
+    },
+    "queryShortestPath": {
+        "fromNodeLabel": "MoocUser",
+        "toNodeLabel": "MoocTarget",
+        "fromFieldName": "USERID",
+        "toFieldName": "TARGETID",
+        "fromValue": 1783,
+        "toValue": 6,
+        "pathLengthLimit": 1000
+    },
+    "queryTriangles": {
+        "nodeLabel": "MoocTarget",
+        "edgeLabel": "MoocAction"
+    },
+    "queryDFS_BFS": {
+        "fromLabel": "MoocUser",
+        "fromFieldName": "USERID",
+        "fromValue": 6725,
+        "edgeLabel": "MoocAction",
+        "fieldName": "TIMESTAMP",
+        "value": 2148374.000,
+        "depth": 1
+    }
+}
