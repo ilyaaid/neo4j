@@ -60,7 +60,7 @@ export class RoadNetLoader implements ILoader {
 
     async createData() {
         // TODO убрать коммент
-        // await this.editFile();
+        await this.editFile();
 
         let result = await this.session.run(
             `
@@ -70,7 +70,7 @@ export class RoadNetLoader implements ILoader {
                 with edge
                 merge (from :${this.config['NodeLabel']} {NodeId: toInteger(edge.FromNodeId)})
                 merge (to :${this.config['NodeLabel']} {NodeId: toInteger(edge.ToNodeId)})
-                create (from)-[r:${this.config['EdgeLabel']}]->(to)
+                create (from)-[:${this.config['EdgeLabel']}]->(to)
             } IN TRANSACTIONS OF 10000 ROWS;
             `
         );

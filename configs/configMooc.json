@@ -6,20 +6,20 @@
     "queryFilter": {
         "edgeLabel": "MoocAction",
         "fieldName": "TIMESTAMP",
-        "value": 2571264
+        "value": 257126
     },
     "queryFilterExt": {
         "nodeLabel": "MoocUser",
         "edgeLabel": "MoocAction",
         "fieldName": "TIMESTAMP",
-        "value": 2571264,
+        "value": 257126,
         "degree": 2
     },
     "queryFilterSum": {
         "nodeLabel": "MoocUser",
         "edgeLabel": "MoocAction",
         "fieldName": "TIMESTAMP",
-        "value": 2571264
+        "value": 257126
     },
     "queryShortestPath": {
         "fromNodeLabel": "MoocUser",
@@ -34,13 +34,13 @@
         "nodeLabel": "MoocTarget",
         "edgeLabel": "MoocAction"
     },
-    "queryDFS_BFS": {
+    "queryRecurs": {
         "fromLabel": "MoocUser",
         "fromFieldName": "USERID",
         "fromValue": 6725,
         "edgeLabel": "MoocAction",
         "fieldName": "TIMESTAMP",
-        "value": 2148374.000,
+        "value": 257126,
         "depth": 1
     }
 }

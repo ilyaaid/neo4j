@@ -5,20 +5,20 @@
     "queryFilter": {
         "edgeLabel": "StableCoinAction",
         "fieldName": "value",
-        "value": 101000000
+        "value": 200
     },
     "queryFilterExt": {
         "nodeLabel": "StableCoinAddress",
         "edgeLabel": "StableCoinAction",
         "fieldName": "value",
-        "value": 493112.608952,
-        "degree": 5
+        "value": 200,
+        "degree": 4
     },
     "queryFilterSum": {
         "nodeLabel": "StableCoinAddress",
         "edgeLabel": "StableCoinAction",
         "fieldName": "value",
-        "value": 300000
+        "value": 200
     },
     "queryShortestPath": {
         "fromNodeLabel": "StableCoinAddress",
@@ -33,13 +33,13 @@
         "nodeLabel": "StableCoinAddress",
         "edgeLabel": "StableCoinAction"
     },
-    "queryDFS_BFS": {
+    "queryRecurs": {
         "fromLabel": "StableCoinAddress",
         "fromFieldName": "addressId",
-        "fromValue": "\"0x74de5d4fcbf63e00296fd95d33236b9794016631\"",
+        "fromValue": "\"0xa9d1e08c7793af67e9d92fe308d5697fb81d3e43\"",
         "edgeLabel": "StableCoinAction",
-        "fieldName": "time_stamp",
-        "value": 1653000000,
+        "fieldName": "value",
+        "value": 200,
         "depth": 3
     }
 }

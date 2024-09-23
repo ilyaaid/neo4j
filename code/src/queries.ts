@@ -1,7 +1,7 @@
 'use strict';
 
 import { Driver, QueryResult, RecordShape, Session } from 'neo4j-driver'
-import fs from 'fs';
+import fs, { stat } from 'fs';
 import path from 'path';
 import { GraphName } from './graphs_config';
 import { createEdgeIndex, createNodeIndex } from './loader';
@@ -38,28 +38,49 @@ export class Neo4jQuery {
             size: result.records.length
         };
 
-        const jsonData = JSON.stringify(records);
-        fs.writeFileSync(outpath, jsonData, 'utf8')
+        const jsonData = JSON.stringify(records, null, 2);
+        fs.writeFileSync(outpath, jsonData, 'utf8');
+    }
+
+    putStat(result: QueryResult<RecordShape>, duration: number, outpath: string) {
+        const directory = path.dirname(outpath);
+        fs.mkdirSync(directory, { recursive: true });
+
+        const jsonData = JSON.stringify({
+            duration,
+            query: result.summary.query.text,
+            profile: result.summary.profile
+        }, null, 2);
+        fs.writeFileSync(outpath, jsonData, 'utf8');
     }
 
     async queryFilter(nodeLabel: string, edgeLabel: string,
-        fieldName: string, value: string, outputFilePath: string) {
+        fieldName: string, value: string, outputFilePath: string, statFilePath: string) {
         try {
             let q, recordKeys;
+
             if (this.graphName == GraphName.Elliptic || this.graphName == GraphName.RoadNet) {
                 await createNodeIndex(this.session, nodeLabel, fieldName);
                 q = `match (n:${nodeLabel})
                 where n.${fieldName} >= ${value} return elementId(n)`;
                 recordKeys = ['node'];
-            } else {
+            } else if (this.graphName == GraphName.Mooc) {
                 await createEdgeIndex(this.session, edgeLabel, fieldName);
                 q = `match ()-[r:${edgeLabel}]->() 
                 where r.${fieldName} >= ${value} return elementId(r)`;
                 recordKeys = ['edge'];
+            } else {
+                await createEdgeIndex(this.session, edgeLabel, fieldName);
+                q = `match ()-[r:${edgeLabel}]->() 
+                where r.${fieldName} = ${value} return elementId(r)`;
+                recordKeys = ['edge'];
             }
-
             console.log(q);
-            let result = await this.session.run(q);
+
+            const startTime = performance.now();
+            let result = await this.session.run('PROFILE ' + q);
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryFilter:', err)
@@ -68,11 +89,11 @@ export class Neo4jQuery {
     }
 
     async queryFilterExt(nodeLabel: string, edgeLabel: string,
-        fieldName: string, value: string, degree: number, outputFilePath: string) {
+        fieldName: string, value: string, degree: number, outputFilePath: string, statFilePath: string) {
         try {
             let q, recordKeys;
-            // TODO добавить создание и удаление индексов в запросы
             if (this.graphName == GraphName.Elliptic) {
+                await createNodeIndex(this.session, nodeLabel, fieldName);
                 q = `MATCH (p:${nodeLabel})
                     where p.${fieldName} >= ${value}
                     MATCH (p)-[r:${edgeLabel}]->()
@@ -80,14 +101,13 @@ export class Neo4jQuery {
                     where cnt >= ${degree}
                     return elementId(p), cnt`;
             } else if (this.graphName == GraphName.RoadNet) {
-                q = `MATCH (p:${nodeLabel})
-                    MATCH (p)-[r:${edgeLabel}]->()
+                q = `MATCH (p:${nodeLabel}), (p)-[r:${edgeLabel}]->()
                     with p, count(r) as cnt
                     where cnt >= ${degree}
                     return elementId(p), cnt`
             } else {
-                q = `MATCH (p:${nodeLabel})
-                    MATCH (p)-[r:${edgeLabel}]->()
+                await createEdgeIndex(this.session, edgeLabel, fieldName);
+                q = `MATCH (p:${nodeLabel}), (p)-[r:${edgeLabel}]->()
                     where r.${fieldName} >= ${value}
                     with p, count(r) as cnt
                     where cnt >= ${degree}
@@ -96,7 +116,10 @@ export class Neo4jQuery {
             recordKeys = ['node', 'degree'];
 
             console.log(q);
-            let result = await this.session.run(q);
+            const startTime = performance.now();
+            let result = await this.session.run('PROFILE ' + q);
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryFilterExt:', err)
@@ -105,13 +128,13 @@ export class Neo4jQuery {
     }
 
     async queryFilterSum(nodeLabel: string, edgeLabel: string,
-        fieldName: string, value: string, outputFilePath: string) {
+        fieldName: string, value: string, outputFilePath: string, statFilePath: string) {
         try {
             let q, recordKeys;
             if (this.graphName == GraphName.Elliptic) {
+                await createNodeIndex(this.session, nodeLabel, fieldName);
                 q = `
-                    MATCH (n:${nodeLabel})
-                    MATCH (n)-[r:${edgeLabel}]->(m:${nodeLabel})
+                    MATCH (n:${nodeLabel}), (n)-[r:${edgeLabel}]->(m:${nodeLabel})
                     where m.${fieldName} >= ${value}
                     WITH n, COLLECT(m.${fieldName}) AS neighbors
                     RETURN elementId(n), REDUCE(total = 0, val IN neighbors | total + val);
@@ -124,6 +147,7 @@ export class Neo4jQuery {
                 `;
                 recordKeys = ['node'];
             } else {
+                await createEdgeIndex(this.session, edgeLabel, fieldName);
                 q = `
                     MATCH (n:${nodeLabel})
                     MATCH (n)-[r:${edgeLabel}]->()
@@ -135,7 +159,10 @@ export class Neo4jQuery {
             }
 
             console.log(q);
-            let result = await this.session.run(q);
+            const startTime = performance.now();
+            let result = await this.session.run('PROFILE ' + q);
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryFilterSum:', err)
@@ -146,20 +173,25 @@ export class Neo4jQuery {
     async queryShortestPath(fromNodeLabel: string, toNodeLabel: string,
         fromFieldName: string, toFieldName: string,
         fromValue: string, toValue: string,
-        pathLengthLimit: string, outputFilePath: string) {
+        pathLengthLimit: string,
+        outputFilePath: string,
+        statFilePath: string) {
         try {
             let q, recordKeys;
             q = `
                 MATCH 
                 (start:${fromNodeLabel} {${fromFieldName}: ${fromValue}}), 
                 (end:${toNodeLabel} {${toFieldName}: ${toValue}}),
-                p = shortestPath((start)-[*..${pathLengthLimit}]-(end))
+                p = shortestPath((start)-[*]-(end))
                 RETURN nodes(p), length(p)
             `;
             recordKeys = ['nodes', 'length'];
 
             console.log(q);
-            let result = await this.session.run(q);
+            const startTime = performance.now();
+            let result = await this.session.run('PROFILE ' + q);
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryShortestPath:', err)
@@ -167,65 +199,49 @@ export class Neo4jQuery {
         }
     }
 
-
-
-    async queryTriangles(nodeLabel: string, edgeLabel: string, outputFilePath: string) {
+    async queryTrianglesUpd(nodeLabel: string, edgeLabel: string,
+        outputFilePath: string,
+        statFilePath: string) {
         try {
+            const triangleLabel = `${nodeLabel}_triangle`
+            // удаляем существующие вершины с треугольниками
+            await this.session.run(`
+                match (n:${triangleLabel})
+                call {
+                    with n
+                    delete n
+                } IN TRANSACTIONS OF 10000 ROWS;`);
+            console.log(`nodes ${triangleLabel} deleted`);
+
+            const startTime = performance.now();
+            // выполняем запрос с поиском треугольников и их записи в вершины
             let q = `
-                MATCH 
-                (a:${nodeLabel})-[:${edgeLabel}]-(b:${nodeLabel}),
-                (b:${nodeLabel})-[:${edgeLabel}]-(c:${nodeLabel})
-                where elementId(a) < elementId(b) AND elementId(b) < elementId(c) AND EXISTS((a)-[:${edgeLabel}]-(c))
-                RETURN DISTINCT elementId(a), elementId(b), elementId(c)
+                PROFILE CALL apoc.periodic.iterate(
+                    "MATCH (a:${nodeLabel})-[:${edgeLabel}]-(b:${nodeLabel}) WHERE elementId(a) < elementId(b) return DISTINCT a, b",
+                    "MATCH (b:${nodeLabel})-[:${edgeLabel}]-(c:${nodeLabel}) 
+                    WHERE elementId(b) < elementId(c) AND EXISTS((a)-[:${edgeLabel}]-(c)) 
+                    WITH DISTINCT elementId(a) as a_id, elementId(b) as b_id, elementId(c) as c_id 
+                    CREATE (:${triangleLabel} {a: a_id, b: b_id, c: c_id})", {
+                    batchSize: 10000,
+                    parallel:true
+                });
             `;
-
-            let recordKeys = ['a', 'b', 'c'];
-
             console.log(q);
             let result = await this.session.run(q);
-            this.putResult(result, recordKeys, outputFilePath);
-        } catch (err) {
-            console.error('error in queryTriangles:', err)
-            return;
-        }
-    }
 
-    async queryTrianglesUpd(nodeLabel: string, edgeLabel: string, outputFilePath: string) {
-        try {
-            // const triangleLabel = `${nodeLabel}_triangle`
-            // // удаляем существующие вершины с треугольниками
-            // await this.session.run(`
-            //     match (n:${triangleLabel})
-            //     call {
-            //         with n
-            //         delete n
-            //     } IN TRANSACTIONS OF 10000 ROWS;`);
-            // console.log(`nodes ${triangleLabel} deleted`);
+            console.log(result.summary.query.text);
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
 
-            // // выполняем запрос с поиском треугольников и их записи в вершины
-            // await this.session.run(`
-            //     CALL apoc.periodic.iterate(
-            //         "MATCH (a:${nodeLabel})-[:${edgeLabel}]-(b:${nodeLabel}), (tmp:${nodeLabel} {_id:-1}) WHERE elementId(a) < elementId(b) return DISTINCT a, b, tmp",
-            //         "MATCH (b:${nodeLabel})-[:${edgeLabel}]-(c:${nodeLabel}) 
-            //         WHERE elementId(b) < elementId(c) AND EXISTS((a)-[:${edgeLabel}]-(c))
-            //         WITH DISTINCT elementId(a) as a_id, elementId(b) as b_id, elementId(c) as c_id, tmp
-            //         CREATE (:${triangleLabel} {a: a_id, b: b_id, c: c_id})
-            //         ", {
-            //         batchSize: 10000,
-            //         parallel:true
-            //     });
-            //     `);
-            
-            
             // чтение вершин с треугольнками
-            let q = `
+            q = `
                     MATCH (n:${nodeLabel}_triangle)
                     return n.a, n.b, n.c
                 `;
 
             let recordKeys = ['a', 'b', 'c'];
             console.log(q);
-            let result = await this.session.run(q);
+            result = await this.session.run(q);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryTriangles:', err)
@@ -233,12 +249,14 @@ export class Neo4jQuery {
         }
     }
 
-    async queryDFS_BFS(bfs: boolean, fromLabel: string,
+    async queryRecurse(fromLabel: string,
         fromFieldName: string, fromValue: string, edgeLabel: string,
-        fieldName: string, value: string, depth: string, outputFilePath: string) {
+        fieldName: string, value: string, depth: string, outputFilePath: string,
+        statFilePath: string) {
         try {
             let q = ``;
             if (this.graphName == GraphName.Elliptic || this.graphName == GraphName.RoadNet) {
+                await createNodeIndex(this.session, fromLabel, fieldName);
                 q = `
                     MATCH (start:${fromLabel} {${fromFieldName}: ${fromValue}})
                     CALL {
@@ -266,13 +284,41 @@ export class Neo4jQuery {
             let recordKeys = ['lastVertex'];
 
             console.log(q);
-            let result = await this.session.run(q);
+            const startTime = performance.now();
+            let result = await this.session.run('PROFILE ' + q);
+
+            const duration = (performance.now() - startTime) / 1000;
+            this.putStat(result, duration, statFilePath);
             this.putResult(result, recordKeys, outputFilePath);
         } catch (err) {
             console.error('error in queryDFS_BFS:', err)
             return;
         }
     }
+
+
+
+
+    // async queryTriangles(nodeLabel: string, edgeLabel: string, outputFilePath: string) {
+    //     try {
+    //         let q = `
+    //             MATCH 
+    //             (a:${nodeLabel})-[:${edgeLabel}]-(b:${nodeLabel}),
+    //             (b:${nodeLabel})-[:${edgeLabel}]-(c:${nodeLabel})
+    //             where elementId(a) < elementId(b) AND elementId(b) < elementId(c) AND EXISTS((a)-[:${edgeLabel}]-(c))
+    //             RETURN DISTINCT elementId(a), elementId(b), elementId(c)
+    //         `;
+
+    //         let recordKeys = ['a', 'b', 'c'];
+
+    //         console.log(q);
+    //         let result = await this.session.run(q);
+    //         this.putResult(result, recordKeys, outputFilePath);
+    //     } catch (err) {
+    //         console.error('error in queryTriangles:', err)
+    //         return;
+    //     }
+    // }
 }
 
 

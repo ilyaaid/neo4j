@@ -1,0 +1,336 @@
+{
+  "duration": 15.912242480002345,
+  "query": "PROFILE \n                    MATCH (start:RoadNetNode {NodeId: 562818})\n                    CALL {\n                        WITH start\n                        MATCH (start)-[r1:RoadNetEdge*20..20]->(n1:RoadNetNode)\n                        where ALL(rel in r1 where endNode(rel).NodeId >= 562818)\n                        RETURN DISTINCT n1\n                    }\n                    RETURN elementId(n1)\n                ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "start",
+      "n1",
+      "`elementId(n1)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 196376,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator                    | Id | Details                                                                                              | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults             |  0 | `elementId(n1)`                                                                                      |              0 |  668 |       0 |              0 |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection                 |  1 | elementId(n1) AS `elementId(n1)`                                                                     |              0 |  668 |       0 |                |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Apply                      |  2 |                                                                                                      |              0 |  668 |       0 |                |                    0/0 |\n| |\\                          +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Distinct                 |  3 | n1                                                                                                   |              0 |  668 |       0 |          24656 |                    0/0 |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Filter                   |  4 | n1:RoadNetNode                                                                                       |              0 |  668 |     668 |                |                    0/0 |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +VarLengthExpand(Pruning) |  5 | p = (start)-[:RoadNetEdge*20]->(n1) WHERE all(rel IN relationships(p) WHERE endNode(rel).NodeId >= $ |              0 |  668 |    4872 |         179848 |                    0/0 |\n| | |                         |    | autoint_1)                                                                                           |                |      |         |                |                        |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Argument                 |  6 | start                                                                                                |              1 |    1 |       0 |                |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeIndexSeek              |  7 | RANGE INDEX start:RoadNetNode(NodeId) WHERE NodeId = $autoint_0                                      |              1 |    1 |       2 |                |                    0/0 |\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 5542, total allocated memory: 196376\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(n1)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 0.00018870488410306977,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 668,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 668,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "start",
+          "n1",
+          "`elementId(n1)`"
+        ],
+        "arguments": {
+          "Details": "elementId(n1) AS `elementId(n1)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 0.00018870488410306977,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 668,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 668,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "Apply@neo4j",
+            "identifiers": [
+              "start",
+              "n1"
+            ],
+            "arguments": {
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "EstimatedRows": 0.00018870488410306977,
+              "DbHits": {
+                "low": 0,
+                "high": 0
+              },
+              "Rows": {
+                "low": 668,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 0,
+            "rows": 668,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "NodeIndexSeek@neo4j",
+                "identifiers": [
+                  "start"
+                ],
+                "arguments": {
+                  "Details": "RANGE INDEX start:RoadNetNode(NodeId) WHERE NodeId = $autoint_0",
+                  "Id": {
+                    "low": 7,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 1,
+                  "DbHits": {
+                    "low": 2,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 1,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 2,
+                "rows": 1,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": []
+              },
+              {
+                "operatorType": "Distinct@neo4j",
+                "identifiers": [
+                  "n1"
+                ],
+                "arguments": {
+                  "Details": "n1",
+                  "Memory": {
+                    "low": 24656,
+                    "high": 0
+                  },
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "EstimatedRows": 0.00018870488410306977,
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "DbHits": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 668,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 0,
+                "rows": 668,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "Filter@neo4j",
+                    "identifiers": [
+                      "start",
+                      "n1"
+                    ],
+                    "arguments": {
+                      "Details": "n1:RoadNetNode",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 0.0001986367201084945,
+                      "DbHits": {
+                        "low": 668,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 668,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 668,
+                    "rows": 668,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": [
+                      {
+                        "operatorType": "VarLengthExpand(Pruning)@neo4j",
+                        "identifiers": [
+                          "start",
+                          "n1"
+                        ],
+                        "arguments": {
+                          "Details": "p = (start)-[:RoadNetEdge*20]->(n1) WHERE all(rel IN relationships(p) WHERE endNode(rel).NodeId >= $autoint_1)",
+                          "Memory": {
+                            "low": 179848,
+                            "high": 0
+                          },
+                          "Id": {
+                            "low": 5,
+                            "high": 0
+                          },
+                          "EstimatedRows": 0.0001986367201084945,
+                          "PageCacheMisses": {
+                            "low": 0,
+                            "high": 0
+                          },
+                          "DbHits": {
+                            "low": 4872,
+                            "high": 0
+                          },
+                          "Rows": {
+                            "low": 668,
+                            "high": 0
+                          },
+                          "PageCacheHits": {
+                            "low": 0,
+                            "high": 0
+                          }
+                        },
+                        "dbHits": 4872,
+                        "rows": 668,
+                        "pageCacheMisses": 0,
+                        "pageCacheHits": 0,
+                        "pageCacheHitRatio": 0,
+                        "time": 0,
+                        "children": [
+                          {
+                            "operatorType": "Argument@neo4j",
+                            "identifiers": [
+                              "start"
+                            ],
+                            "arguments": {
+                              "Details": "start",
+                              "Id": {
+                                "low": 6,
+                                "high": 0
+                              },
+                              "PageCacheMisses": {
+                                "low": 0,
+                                "high": 0
+                              },
+                              "EstimatedRows": 1,
+                              "DbHits": {
+                                "low": 0,
+                                "high": 0
+                              },
+                              "Rows": {
+                                "low": 1,
+                                "high": 0
+                              },
+                              "PageCacheHits": {
+                                "low": 0,
+                                "high": 0
+                              }
+                            },
+                            "dbHits": 0,
+                            "rows": 1,
+                            "pageCacheMisses": 0,
+                            "pageCacheHits": 0,
+                            "pageCacheHitRatio": 0,
+                            "time": 0,
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

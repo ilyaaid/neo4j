@@ -1,0 +1,115 @@
+{
+  "duration": 0.8179086069986224,
+  "query": "\n                PROFILE CALL apoc.periodic.iterate(\n                    \"MATCH (a:MoocTarget)-[:MoocAction]-(b:MoocTarget) WHERE elementId(a) < elementId(b) return DISTINCT a, b\",\n                    \"MATCH (b:MoocTarget)-[:MoocAction]-(c:MoocTarget) \n                    WHERE elementId(b) < elementId(c) AND EXISTS((a)-[:MoocAction]-(c)) \n                    WITH DISTINCT elementId(a) as a_id, elementId(b) as b_id, elementId(c) as c_id \n                    CREATE (:MoocTarget_triangle {a: a_id, b: b_id, c: c_id})\", {\n                    batchSize: 10000,\n                    parallel:true\n                });\n            ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "retries",
+      "updateStatistics",
+      "total",
+      "timeTaken",
+      "batch",
+      "failedParams",
+      "failedOperations",
+      "failedBatches",
+      "errorMessages",
+      "committedOperations",
+      "wasTerminated",
+      "operations",
+      "batches"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 720,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 656,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-----------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator        | Id | Details                                                                                              | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-----------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults |  0 | batches, total, timeTaken, committedOperations, failedOperations, failedBatches, retries,            |             10 |    1 |       0 |            656 |                    0/0 |\n| |               |    | errorMessages, batch, operations, wasTerminated, failedParams, updateStatistics                      |                |      |         |                |                        |\n| |               +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProcedureCall  |  1 | apoc.periodic.iterate($autostring_0, $autostring_1, {batchSize: $autoint_2, parallel: true}) :: (bat |             10 |    1 |         |                |                    0/0 |\n|                 |    | ches :: INTEGER, total :: INTEGER, timeTaken :: INTEGER, committedOperations :: INTEGER, failedOpera |                |      |         |                |                        |\n|                 |    | tions :: INTEGER, failedBatches :: INTEGER, retries :: INTEGER, errorMessages :: MAP, batch :: MAP,  |                |      |         |                |                        |\n|                 |    | operations :: MAP, wasTerminated :: BOOLEAN, failedParams :: MAP, updateStatistics :: MAP)           |                |      |         |                |                        |\n+-----------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: ?, total allocated memory: 720\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "batches, total, timeTaken, committedOperations, failedOperations, failedBatches, retries, errorMessages, batch, operations, wasTerminated, failedParams, updateStatistics",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 10,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 1,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 1,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "ProcedureCall@neo4j",
+        "identifiers": [
+          "retries",
+          "updateStatistics",
+          "total",
+          "timeTaken",
+          "batch",
+          "failedParams",
+          "failedOperations",
+          "failedBatches",
+          "errorMessages",
+          "committedOperations",
+          "wasTerminated",
+          "operations",
+          "batches"
+        ],
+        "arguments": {
+          "Details": "apoc.periodic.iterate($autostring_0, $autostring_1, {batchSize: $autoint_2, parallel: true}) :: (batches :: INTEGER, total :: INTEGER, timeTaken :: INTEGER, committedOperations :: INTEGER, failedOperations :: INTEGER, failedBatches :: INTEGER, retries :: INTEGER, errorMessages :: MAP, batch :: MAP, operations :: MAP, wasTerminated :: BOOLEAN, failedParams :: MAP, updateStatistics :: MAP)",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 10,
+          "Rows": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 0,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": []
+      }
+    ]
+  }
+}

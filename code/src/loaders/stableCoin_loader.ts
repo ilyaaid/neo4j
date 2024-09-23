@@ -22,9 +22,7 @@ export class StableCoinLoader implements ILoader {
     }
 
     async createData() {
-        let result;
-        // TODO заменить файл CSV на основной
-        result = await this.session.run(
+        let result = await this.session.run(
             `
             load csv with headers from 'file:///ERC20-stablecoins/token_transfers_V2.0.0.csv' as trans
             FIELDTERMINATOR ','

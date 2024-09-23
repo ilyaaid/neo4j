@@ -1,0 +1,259 @@
+{
+  "duration": 0.2733318779990077,
+  "query": "PROFILE MATCH (p:EllipticTransaction)\n                    where p.size >= 226\n                    MATCH (p)-[r:EllipticEdge]->()\n                    with p, count(r) as cnt\n                    where cnt >= 1.41\n                    return elementId(p), cnt",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "p",
+      "cnt",
+      "`elementId(p)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 14397792,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-----------------------+----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| Operator              | Id | Details                                                          | Estimated Rows | Rows   | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-----------------------+----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +ProduceResults       |  0 | `elementId(p)`, cnt                                              |             25 |  31877 |       0 |              0 |                    0/0 |\n| |                     +----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Projection           |  1 | elementId(p) AS `elementId(p)`                                   |             25 |  31877 |       0 |                |                    0/0 |\n| |                     +----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Filter               |  2 | cnt >= $autodouble_1                                             |             25 |  31877 |       0 |                |                    0/0 |\n| |                     +----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +EagerAggregation     |  3 | p, count(r) AS cnt                                               |             84 | 114229 |       0 |       14397728 |                    0/0 |\n| |                     +----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Expand(All)          |  4 | (p)-[r:EllipticEdge]->(anon_0)                                   |           7043 | 170946 |  466485 |                |                    0/0 |\n| |                     +----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +NodeIndexSeekByRange |  5 | RANGE INDEX p:EllipticTransaction(size) WHERE size >= $autoint_0 |           6124 | 135096 |  135097 |                |                    0/0 |\n+-----------------------+----+------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n\nTotal database accesses: 601582, total allocated memory: 14397792\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(p)`, cnt",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 25.176801947900714,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 31877,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 31877,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "p",
+          "cnt",
+          "`elementId(p)`"
+        ],
+        "arguments": {
+          "Details": "elementId(p) AS `elementId(p)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 25.176801947900714,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 31877,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 31877,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "Filter@neo4j",
+            "identifiers": [
+              "p",
+              "cnt"
+            ],
+            "arguments": {
+              "Details": "cnt >= $autodouble_1",
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "EstimatedRows": 25.176801947900714,
+              "DbHits": {
+                "low": 0,
+                "high": 0
+              },
+              "Rows": {
+                "low": 31877,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 0,
+            "rows": 31877,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "EagerAggregation@neo4j",
+                "identifiers": [
+                  "p",
+                  "cnt"
+                ],
+                "arguments": {
+                  "Details": "p, count(r) AS cnt",
+                  "Memory": {
+                    "low": 14397728,
+                    "high": 0
+                  },
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "EstimatedRows": 83.92267315966905,
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "DbHits": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 114229,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 0,
+                "rows": 114229,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "Expand(All)@neo4j",
+                    "identifiers": [
+                      "p",
+                      "r",
+                      "anon_0"
+                    ],
+                    "arguments": {
+                      "Details": "(p)-[r:EllipticEdge]->(anon_0)",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 7043.015070264636,
+                      "DbHits": {
+                        "low": 466485,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 170946,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 466485,
+                    "rows": 170946,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": [
+                      {
+                        "operatorType": "NodeIndexSeekByRange@neo4j",
+                        "identifiers": [
+                          "p"
+                        ],
+                        "arguments": {
+                          "Details": "RANGE INDEX p:EllipticTransaction(size) WHERE size >= $autoint_0",
+                          "Id": {
+                            "low": 5,
+                            "high": 0
+                          },
+                          "PageCacheMisses": {
+                            "low": 0,
+                            "high": 0
+                          },
+                          "EstimatedRows": 6123.821287588294,
+                          "DbHits": {
+                            "low": 135097,
+                            "high": 0
+                          },
+                          "Rows": {
+                            "low": 135096,
+                            "high": 0
+                          },
+                          "PageCacheHits": {
+                            "low": 0,
+                            "high": 0
+                          }
+                        },
+                        "dbHits": 135097,
+                        "rows": 135096,
+                        "pageCacheMisses": 0,
+                        "pageCacheHits": 0,
+                        "pageCacheHitRatio": 0,
+                        "time": 0,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

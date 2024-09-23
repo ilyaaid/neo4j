@@ -5,12 +5,12 @@
     "queryFilter": {
         "nodeLabel": "RoadNetNode",
         "fieldName": "NodeId",
-        "value": 1900000
+        "value": 200000
     },
     "queryFilterExt": {
         "nodeLabel": "RoadNetNode",
         "edgeLabel": "RoadNetEdge",
-        "degree": 10
+        "degree": 3
     },
     "queryFilterSum": {
         "nodeLabel": "RoadNetNode",
@@ -29,13 +29,13 @@
         "nodeLabel": "RoadNetNode",
         "edgeLabel": "RoadNetEdge"
     },
-    "queryDFS_BFS": {
+    "queryRecurs": {
         "fromLabel": "RoadNetNode",
         "fromFieldName": "NodeId",
         "fromValue":  562818,
         "edgeLabel": "RoadNetEdge",
         "fieldName": "NodeId",
         "value": 562818,
-        "depth": 15
+        "depth": 20
     }
 }

@@ -1,0 +1,224 @@
+{
+  "duration": 0.18344383300095796,
+  "query": "PROFILE \n                    MATCH (n:MoocUser)\n                    MATCH (n)-[r:MoocAction]->()\n                    where r.TIMESTAMP >= 257126\n                    WITH n, COLLECT(r.TIMESTAMP) AS neighbors\n                    RETURN elementId(n), REDUCE(total = 0, val IN neighbors | total + val);\n                ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "n",
+      "neighbors",
+      "`elementId(n)`",
+      "`REDUCE(total = 0, val IN neighbors | total + val)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 4847576,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+---------------------------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| Operator                              | Id | Details                                                                                              | Estimated Rows | Rows   | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+---------------------------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +ProduceResults                       |  0 | `elementId(n)`, `REDUCE(total = 0, val IN neighbors | total + val)`                                  |            111 |   6667 |       0 |              0 |                    0/0 |\n| |                                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Projection                           |  1 | elementId(n) AS `elementId(n)`, reduce(total = $autoint_1, val IN neighbors | total + val) AS `REDUC |            111 |   6667 |       0 |                |                    0/0 |\n| |                                     |    | E(total = 0, val IN neighbors | total + val)`                                                        |                |        |         |                |                        |\n| |                                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +EagerAggregation                     |  2 | n, COLLECT(cache[r.TIMESTAMP]) AS neighbors                                                          |            111 |   6667 |       0 |        4847512 |                    0/0 |\n| |                                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Filter                               |  3 | n:MoocUser                                                                                           |          12354 | 373947 |  373947 |                |                    0/0 |\n| |                                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +DirectedRelationshipIndexSeekByRange |  4 | RANGE INDEX (n)-[r:MoocAction(TIMESTAMP)]->(anon_0) WHERE TIMESTAMP >= $autoint_0, cache[r.TIMESTAMP |          12354 | 373947 |  373948 |                |                    0/0 |\n|                                       |    | ]                                                                                                    |                |        |         |                |                        |\n+---------------------------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n\nTotal database accesses: 747895, total allocated memory: 4847576\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(n)`, `REDUCE(total = 0, val IN neighbors | total + val)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 111.14686527858439,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 6667,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 6667,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "n",
+          "neighbors",
+          "`elementId(n)`",
+          "`REDUCE(total = 0, val IN neighbors | total + val)`"
+        ],
+        "arguments": {
+          "Details": "elementId(n) AS `elementId(n)`, reduce(total = $autoint_1, val IN neighbors | total + val) AS `REDUCE(total = 0, val IN neighbors | total + val)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 111.14686527858439,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 6667,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 6667,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "EagerAggregation@neo4j",
+            "identifiers": [
+              "n",
+              "neighbors"
+            ],
+            "arguments": {
+              "Details": "n, COLLECT(cache[r.TIMESTAMP]) AS neighbors",
+              "Memory": {
+                "low": 4847512,
+                "high": 0
+              },
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "EstimatedRows": 111.14686527858439,
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "DbHits": {
+                "low": 0,
+                "high": 0
+              },
+              "Rows": {
+                "low": 6667,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 0,
+            "rows": 6667,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "Filter@neo4j",
+                "identifiers": [
+                  "r",
+                  "n",
+                  "anon_0"
+                ],
+                "arguments": {
+                  "Details": "n:MoocUser",
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 12353.625661255786,
+                  "DbHits": {
+                    "low": 373947,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 373947,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 373947,
+                "rows": 373947,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "DirectedRelationshipIndexSeekByRange@neo4j",
+                    "identifiers": [
+                      "r",
+                      "n",
+                      "anon_0"
+                    ],
+                    "arguments": {
+                      "Details": "RANGE INDEX (n)-[r:MoocAction(TIMESTAMP)]->(anon_0) WHERE TIMESTAMP >= $autoint_0, cache[r.TIMESTAMP]",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 12353.625661255786,
+                      "DbHits": {
+                        "low": 373948,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 373947,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 373948,
+                    "rows": 373947,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

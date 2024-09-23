@@ -64,7 +64,7 @@ export class MoocLoader implements ILoader {
 
     async createData(): Promise<void> {
         // TODO убрать коммент
-        // await this.editFiles();
+        await this.editFiles();
         let result;
 
 

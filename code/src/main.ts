@@ -58,66 +58,68 @@ async function main() {
                 const graph = config['graphName'];
                 let query = new Neo4jQuery(driver, graph)
 
-                const resultDir = `../results/result_${graph}`;
+                const resultDir = `../results/${graph}`;
+                const statDir = `../stats/${graph}`;
+
 
                 // Выбор всех вершин или ребер с заданным значением поля.
                 const qFilterConf = config['queryFilter'];
-                // await query.queryFilter(qFilterConf['nodeLabel'], qFilterConf['edgeLabel'],
-                //     qFilterConf['fieldName'], qFilterConf['value'], resultDir + '/queryFilter.json');
+                await query.queryFilter(qFilterConf['nodeLabel'], qFilterConf['edgeLabel'],
+                    qFilterConf['fieldName'], qFilterConf['value'], 
+                    resultDir + '/Filter.json', statDir + '/Filter.json');
+
+
 
                 // Выбор всех вершин с заданным значением поля 
                 // + фильтр по связям (степень вершины с учётом условия на связи данной вершины).
                 const qFilterExtConf = config['queryFilterExt'];
-                // await query.queryFilterExt(
-                //     qFilterExtConf['nodeLabel'],
-                //     qFilterExtConf['edgeLabel'],
-                //     qFilterExtConf['fieldName'],
-                //     qFilterExtConf['value'],
-                //     qFilterExtConf['degree'],
-                //     resultDir + '/queryFilterExt.json');
+                await query.queryFilterExt(
+                    qFilterExtConf['nodeLabel'],
+                    qFilterExtConf['edgeLabel'],
+                    qFilterExtConf['fieldName'],
+                    qFilterExtConf['value'],
+                    qFilterExtConf['degree'],
+                    resultDir + '/FilterExt.json', 
+                    statDir + '/FilterExt.json');
+
 
 
                 // Подсчёт для каждой вершины суммы некоторого параметра по всем соседним вершинам
                 // с ограничением на связь/значение параметра 
                 // (например, учитывать значение в сумме, если оно превышает некоторый порог).
                 const qFilterSum = config['queryFilterSum'];
-                // await query.queryFilterSum(qFilterSum['nodeLabel'], qFilterSum['edgeLabel'],
-                //     qFilterSum['fieldName'], qFilterSum['value'],
-                //     resultDir + '/queryFilterSum.json');
+                await query.queryFilterSum(qFilterSum['nodeLabel'], qFilterSum['edgeLabel'],
+                    qFilterSum['fieldName'], qFilterSum['value'],
+                    resultDir + '/FilterSum.json', 
+                    statDir + '/FilterSum.json');
+
+
 
                 // Кратчайшее расстояние между двумя вершинами
                 const qShortestPath = config['queryShortestPath'];
-                // await query.queryShortestPath(
-                //     qShortestPath['fromNodeLabel'], qShortestPath['toNodeLabel'],
-                //     qShortestPath['fromFieldName'], qShortestPath['toFieldName'], 
-                //     qShortestPath['fromValue'], qShortestPath['toValue'],
-                //     qShortestPath['pathLengthLimit'], resultDir + '/queryShortestPath.json'
-                // );
+                await query.queryShortestPath(
+                    qShortestPath['fromNodeLabel'], qShortestPath['toNodeLabel'],
+                    qShortestPath['fromFieldName'], qShortestPath['toFieldName'], 
+                    qShortestPath['fromValue'], qShortestPath['toValue'],
+                    qShortestPath['pathLengthLimit'], 
+                    resultDir + '/ShortestPath.json',
+                    statDir + '/ShortestPath.json'
+                );
+
+
+                // Рекурсивный обход графа
+                const qRecurs = config['queryRecurs'];
+                await query.queryRecurse(qRecurs['fromLabel'], qRecurs['fromFieldName'],
+                    qRecurs['fromValue'], qRecurs['edgeLabel'], qRecurs['fieldName'],
+                    qRecurs['value'], qRecurs['depth'],
+                    resultDir + `/Recurs.json`, statDir + '/Recurs.json');
+
 
                 // Нахождение всех треугольников в графе (без учета ориентации)
                 const qTriangles = config['queryTriangles'];
-                // await query.queryTriangles(qTriangles['nodeLabel'], qTriangles['edgeLabel'],
-                //     resultDir + '/queryTriangles.json');
-
-                const startTime = performance.now();
-
                 await query.queryTrianglesUpd(qTriangles['nodeLabel'], qTriangles['edgeLabel'],
-                    resultDir + '/queryTriangles.json');
+                    resultDir + '/Triangles.json', statDir + '/Triangles.json');
 
-                const endTime = performance.now();
-                const result = (endTime - startTime) / 1000;
-                console.log(`Время выполнения: ${result} секунд`);
-                fs.writeFileSync("stats.txt", `${result}`);
-
-                // Обход графа в глубину и в ширину
-                const qDFS_BFS = config['queryDFS_BFS'];
-                // TODO добавить true в массив
-                // for (let bfs of [false]) {
-                //     await query.queryDFS_BFS(bfs, qDFS_BFS['fromLabel'], qDFS_BFS['fromFieldName'],
-                //         qDFS_BFS['fromValue'], qDFS_BFS['edgeLabel'], qDFS_BFS['fieldName'],
-                //         qDFS_BFS['value'], qDFS_BFS['depth'],
-                //         resultDir + `/query${bfs ? 'BFS' : 'DFS'}.json`);
-                // }
             });
 
         await program.parseAsync(process.argv);

@@ -1,0 +1,141 @@
+{
+  "duration": 0.3690870449990034,
+  "query": "PROFILE match ()-[r:StableCoinAction]->() \n                where r.value = 200 return elementId(r)",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "r",
+      "anon_0",
+      "anon_1",
+      "`elementId(r)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 64,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+--------------------------------+----+-------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| Operator                       | Id | Details                                                                             | Estimated Rows | Rows   | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+--------------------------------+----+-------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +ProduceResults                |  0 | `elementId(r)`                                                                      |              3 | 108842 |       0 |              0 |                    0/0 |\n| |                              +----+-------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Projection                    |  1 | elementId(r) AS `elementId(r)`                                                      |              3 | 108842 |       0 |                |                    0/0 |\n| |                              +----+-------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +DirectedRelationshipIndexSeek |  2 | RANGE INDEX (anon_0)-[r:StableCoinAction(value)]->(anon_1) WHERE value = $autoint_0 |              3 | 108842 |  108843 |                |                    0/0 |\n+--------------------------------+----+-------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n\nTotal database accesses: 108843, total allocated memory: 64\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(r)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 2.5985349504372017,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 108842,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 108842,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "r",
+          "anon_0",
+          "anon_1",
+          "`elementId(r)`"
+        ],
+        "arguments": {
+          "Details": "elementId(r) AS `elementId(r)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 2.5985349504372017,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 108842,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 108842,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "DirectedRelationshipIndexSeek@neo4j",
+            "identifiers": [
+              "r",
+              "anon_0",
+              "anon_1"
+            ],
+            "arguments": {
+              "Details": "RANGE INDEX (anon_0)-[r:StableCoinAction(value)]->(anon_1) WHERE value = $autoint_0",
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "EstimatedRows": 2.5985349504372017,
+              "DbHits": {
+                "low": 108843,
+                "high": 0
+              },
+              "Rows": {
+                "low": 108842,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 108843,
+            "rows": 108842,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}

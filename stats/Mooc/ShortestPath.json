@@ -1,0 +1,263 @@
+{
+  "duration": 0.007845325000584125,
+  "query": "PROFILE \n                MATCH \n                (start:MoocUser {USERID: 1783}), \n                (end:MoocTarget {TARGETID: 6}),\n                p = shortestPath((start)-[*]-(end))\n                RETURN nodes(p), length(p)\n            ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "`length(p)`",
+      "anon_0",
+      "end",
+      "start",
+      "`nodes(p)`",
+      "p"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 8704,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 920,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-------------------+----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator          | Id | Details                                                          | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-------------------+----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults   |  0 | `nodes(p)`, `length(p)`                                          |              1 |    1 |       4 |            920 |                    0/0 |\n| |                 +----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection       |  1 | nodes(p) AS `nodes(p)`, length(p) AS `length(p)`                 |              1 |    1 |       0 |                |                    0/0 |\n| |                 +----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ShortestPath     |  2 | p = (start)-[anon_0*]-(end)                                      |              1 |    1 |     168 |           8640 |                    0/0 |\n| |                 +----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +CartesianProduct |  3 |                                                                  |              1 |    1 |       0 |                |                    0/0 |\n| |\\                +----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +NodeIndexSeek  |  4 | RANGE INDEX end:MoocTarget(TARGETID) WHERE TARGETID = $autoint_1 |              1 |    1 |       2 |                |                    0/0 |\n| |                 +----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeIndexSeek    |  5 | RANGE INDEX start:MoocUser(USERID) WHERE USERID = $autoint_0     |              1 |    1 |       2 |                |                    0/0 |\n+-------------------+----+------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 176, total allocated memory: 8704\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 4,
+        "high": 0
+      },
+      "Details": "`nodes(p)`, `length(p)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 0.9999999999999999,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 1,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 4,
+    "rows": 1,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "`length(p)`",
+          "anon_0",
+          "end",
+          "start",
+          "`nodes(p)`",
+          "p"
+        ],
+        "arguments": {
+          "Details": "nodes(p) AS `nodes(p)`, length(p) AS `length(p)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 0.9999999999999999,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 1,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "ShortestPath@neo4j",
+            "identifiers": [
+              "start",
+              "end",
+              "p",
+              "anon_0"
+            ],
+            "arguments": {
+              "Details": "p = (start)-[anon_0*]-(end)",
+              "Memory": {
+                "low": 8640,
+                "high": 0
+              },
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "EstimatedRows": 0.9999999999999999,
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "DbHits": {
+                "low": 168,
+                "high": 0
+              },
+              "Rows": {
+                "low": 1,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 168,
+            "rows": 1,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "CartesianProduct@neo4j",
+                "identifiers": [
+                  "start",
+                  "end"
+                ],
+                "arguments": {
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 0.9999999999999999,
+                  "DbHits": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 1,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 0,
+                "rows": 1,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "NodeIndexSeek@neo4j",
+                    "identifiers": [
+                      "start"
+                    ],
+                    "arguments": {
+                      "Details": "RANGE INDEX start:MoocUser(USERID) WHERE USERID = $autoint_0",
+                      "Id": {
+                        "low": 5,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 1,
+                      "DbHits": {
+                        "low": 2,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 1,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 2,
+                    "rows": 1,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": []
+                  },
+                  {
+                    "operatorType": "NodeIndexSeek@neo4j",
+                    "identifiers": [
+                      "end"
+                    ],
+                    "arguments": {
+                      "Details": "RANGE INDEX end:MoocTarget(TARGETID) WHERE TARGETID = $autoint_1",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 1,
+                      "DbHits": {
+                        "low": 2,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 1,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 2,
+                    "rows": 1,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

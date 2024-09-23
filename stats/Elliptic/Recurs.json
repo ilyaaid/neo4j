@@ -1,0 +1,336 @@
+{
+  "duration": 0.011329530000686646,
+  "query": "PROFILE \n                    MATCH (start:EllipticTransaction {txId: 2984918})\n                    CALL {\n                        WITH start\n                        MATCH (start)-[r1:EllipticEdge*50..50]->(n1:EllipticTransaction)\n                        where ALL(rel in r1 where endNode(rel).size >= 226)\n                        RETURN DISTINCT n1\n                    }\n                    RETURN elementId(n1)\n                ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "start",
+      "n1",
+      "`elementId(n1)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 117936,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator                    | Id | Details                                                                                              | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults             |  0 | `elementId(n1)`                                                                                      |              0 |    0 |       0 |              0 |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection                 |  1 | elementId(n1) AS `elementId(n1)`                                                                     |              0 |    0 |       0 |                |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Apply                      |  2 |                                                                                                      |              0 |    0 |       0 |                |                    0/0 |\n| |\\                          +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Distinct                 |  3 | n1                                                                                                   |              0 |    0 |       0 |            320 |                    0/0 |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Filter                   |  4 | n1:EllipticTransaction                                                                               |              0 |    0 |       0 |                |                    0/0 |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +VarLengthExpand(Pruning) |  5 | p = (start)-[:EllipticEdge*50]->(n1) WHERE all(rel IN relationships(p) WHERE endNode(rel).size >= $a |              0 |    0 |    2550 |         117536 |                    0/0 |\n| | |                         |    | utoint_1)                                                                                            |                |      |         |                |                        |\n| | |                         +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +Argument                 |  6 | start                                                                                                |              1 |    1 |       0 |                |                    0/0 |\n| |                           +----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeIndexSeek              |  7 | RANGE INDEX start:EllipticTransaction(txId) WHERE txId = $autoint_0                                  |              1 |    1 |       2 |                |                    0/0 |\n+-----------------------------+----+------------------------------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 2552, total allocated memory: 117936\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(n1)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 7.353193776299596e-51,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 0,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 0,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "start",
+          "n1",
+          "`elementId(n1)`"
+        ],
+        "arguments": {
+          "Details": "elementId(n1) AS `elementId(n1)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 7.353193776299596e-51,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 0,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 0,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "Apply@neo4j",
+            "identifiers": [
+              "start",
+              "n1"
+            ],
+            "arguments": {
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "EstimatedRows": 7.353193776299596e-51,
+              "DbHits": {
+                "low": 0,
+                "high": 0
+              },
+              "Rows": {
+                "low": 0,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 0,
+            "rows": 0,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "NodeIndexSeek@neo4j",
+                "identifiers": [
+                  "start"
+                ],
+                "arguments": {
+                  "Details": "RANGE INDEX start:EllipticTransaction(txId) WHERE txId = $autoint_0",
+                  "Id": {
+                    "low": 7,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 1,
+                  "DbHits": {
+                    "low": 2,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 1,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 2,
+                "rows": 1,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": []
+              },
+              {
+                "operatorType": "Distinct@neo4j",
+                "identifiers": [
+                  "n1"
+                ],
+                "arguments": {
+                  "Details": "n1",
+                  "Memory": {
+                    "low": 320,
+                    "high": 0
+                  },
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "EstimatedRows": 7.353193776299596e-51,
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "DbHits": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 0,
+                "rows": 0,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "Filter@neo4j",
+                    "identifiers": [
+                      "start",
+                      "n1"
+                    ],
+                    "arguments": {
+                      "Details": "n1:EllipticTransaction",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 7.740203975052207e-51,
+                      "DbHits": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 0,
+                    "rows": 0,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": [
+                      {
+                        "operatorType": "VarLengthExpand(Pruning)@neo4j",
+                        "identifiers": [
+                          "start",
+                          "n1"
+                        ],
+                        "arguments": {
+                          "Details": "p = (start)-[:EllipticEdge*50]->(n1) WHERE all(rel IN relationships(p) WHERE endNode(rel).size >= $autoint_1)",
+                          "Memory": {
+                            "low": 117536,
+                            "high": 0
+                          },
+                          "Id": {
+                            "low": 5,
+                            "high": 0
+                          },
+                          "EstimatedRows": 7.740203975052207e-51,
+                          "PageCacheMisses": {
+                            "low": 0,
+                            "high": 0
+                          },
+                          "DbHits": {
+                            "low": 2550,
+                            "high": 0
+                          },
+                          "Rows": {
+                            "low": 0,
+                            "high": 0
+                          },
+                          "PageCacheHits": {
+                            "low": 0,
+                            "high": 0
+                          }
+                        },
+                        "dbHits": 2550,
+                        "rows": 0,
+                        "pageCacheMisses": 0,
+                        "pageCacheHits": 0,
+                        "pageCacheHitRatio": 0,
+                        "time": 0,
+                        "children": [
+                          {
+                            "operatorType": "Argument@neo4j",
+                            "identifiers": [
+                              "start"
+                            ],
+                            "arguments": {
+                              "Details": "start",
+                              "Id": {
+                                "low": 6,
+                                "high": 0
+                              },
+                              "PageCacheMisses": {
+                                "low": 0,
+                                "high": 0
+                              },
+                              "EstimatedRows": 1,
+                              "DbHits": {
+                                "low": 0,
+                                "high": 0
+                              },
+                              "Rows": {
+                                "low": 1,
+                                "high": 0
+                              },
+                              "PageCacheHits": {
+                                "low": 0,
+                                "high": 0
+                              }
+                            },
+                            "dbHits": 0,
+                            "rows": 1,
+                            "pageCacheMisses": 0,
+                            "pageCacheHits": 0,
+                            "pageCacheHitRatio": 0,
+                            "time": 0,
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

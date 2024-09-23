@@ -1,0 +1,135 @@
+{
+  "duration": 6.784705837003886,
+  "query": "PROFILE \n                    MATCH (n:RoadNetNode)\n                    RETURN elementId(n)\n                ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "n",
+      "`elementId(n)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 64,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+------------------+----+--------------------------------+----------------+---------+---------+----------------+------------------------+\n| Operator         | Id | Details                        | Estimated Rows | Rows    | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+------------------+----+--------------------------------+----------------+---------+---------+----------------+------------------------+\n| +ProduceResults  |  0 | `elementId(n)`                 |        1965206 | 1965206 |       0 |              0 |                    0/0 |\n| |                +----+--------------------------------+----------------+---------+---------+----------------+------------------------+\n| +Projection      |  1 | elementId(n) AS `elementId(n)` |        1965206 | 1965206 |       0 |                |                    0/0 |\n| |                +----+--------------------------------+----------------+---------+---------+----------------+------------------------+\n| +NodeByLabelScan |  2 | n:RoadNetNode                  |        1965206 | 1965206 | 1965207 |                |                    0/0 |\n+------------------+----+--------------------------------+----------------+---------+---------+----------------+------------------------+\n\nTotal database accesses: 1965207, total allocated memory: 64\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(n)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 1965206,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 1965206,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 1965206,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "n",
+          "`elementId(n)`"
+        ],
+        "arguments": {
+          "Details": "elementId(n) AS `elementId(n)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 1965206,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 1965206,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 1965206,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "NodeByLabelScan@neo4j",
+            "identifiers": [
+              "n"
+            ],
+            "arguments": {
+              "Details": "n:RoadNetNode",
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "EstimatedRows": 1965206,
+              "DbHits": {
+                "low": 1965207,
+                "high": 0
+              },
+              "Rows": {
+                "low": 1965206,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 1965207,
+            "rows": 1965206,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}

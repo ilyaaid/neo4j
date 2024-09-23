@@ -30,7 +30,6 @@ export class EllipticLoader implements ILoader {
                 create (newTx :${this.config['TransactionLabel']}
                 {
                     txId: toInteger(tx.txId),
-
                     timestamp: toFloat(tx.timestamp),
                     Local_feature_1: toFloat(tx.Local_feature_1),
                     Aggregate_feature_1: toFloat(tx.Aggregate_feature_1),
@@ -52,7 +51,8 @@ export class EllipticLoader implements ILoader {
                     out_BTC_median: toFloat(tx.out_BTC_median),
                     out_BTC_total: toFloat(tx.out_BTC_total)
                 })
-            } IN TRANSACTIONS OF 10000 ROWS;`)
+            } IN TRANSACTIONS OF 10000 ROWS;
+            `)
 
         console.log(result)
 
@@ -73,7 +73,8 @@ export class EllipticLoader implements ILoader {
                 match (tx1 :${this.config['TransactionLabel']} {txId: toInteger(edge.txId1)})
                 match (tx2 :${this.config['TransactionLabel']} {txId: toInteger(edge.txId2)})
                 create (tx1)-[r:${this.config['EdgeLabel']}]->(tx2)
-            } IN TRANSACTIONS OF 10000 ROWS;`)
+            } IN TRANSACTIONS OF 10000 ROWS;
+             `)
 
         console.log(result)
     }

@@ -1,0 +1,263 @@
+{
+  "duration": 0.15675728999823332,
+  "query": "PROFILE \n                MATCH \n                (start:StableCoinAddress {addressId: \"0x5f407a10e031c0f4b6c2286089023b01267bb01c\"}), \n                (end:StableCoinAddress {addressId: \"0x2027a4a5884d7c511dfb542d5c68650471564215\"}),\n                p = shortestPath((start)-[*]-(end))\n                RETURN nodes(p), length(p)\n            ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "`length(p)`",
+      "anon_0",
+      "end",
+      "start",
+      "`nodes(p)`",
+      "p"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 6624,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 2048,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-------------------+----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| Operator          | Id | Details                                                                        | Estimated Rows | Rows | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-------------------+----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ProduceResults   |  0 | `nodes(p)`, `length(p)`                                                        |              1 |    1 |       8 |           2048 |                    0/0 |\n| |                 +----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +Projection       |  1 | nodes(p) AS `nodes(p)`, length(p) AS `length(p)`                               |              1 |    1 |       0 |                |                    0/0 |\n| |                 +----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +ShortestPath     |  2 | p = (start)-[anon_0*]-(end)                                                    |              1 |    1 |     142 |           5040 |                    0/0 |\n| |                 +----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +CartesianProduct |  3 |                                                                                |              1 |    1 |       0 |                |                    0/0 |\n| |\\                +----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| | +NodeIndexSeek  |  4 | RANGE INDEX end:StableCoinAddress(addressId) WHERE addressId = $autostring_1   |              1 |    1 |       2 |                |                    0/0 |\n| |                 +----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n| +NodeIndexSeek    |  5 | RANGE INDEX start:StableCoinAddress(addressId) WHERE addressId = $autostring_0 |              1 |    1 |       2 |                |                    0/0 |\n+-------------------+----+--------------------------------------------------------------------------------+----------------+------+---------+----------------+------------------------+\n\nTotal database accesses: 154, total allocated memory: 6624\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 8,
+        "high": 0
+      },
+      "Details": "`nodes(p)`, `length(p)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 1,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 1,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 8,
+    "rows": 1,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "`length(p)`",
+          "anon_0",
+          "end",
+          "start",
+          "`nodes(p)`",
+          "p"
+        ],
+        "arguments": {
+          "Details": "nodes(p) AS `nodes(p)`, length(p) AS `length(p)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 1,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 1,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "ShortestPath@neo4j",
+            "identifiers": [
+              "start",
+              "end",
+              "p",
+              "anon_0"
+            ],
+            "arguments": {
+              "Details": "p = (start)-[anon_0*]-(end)",
+              "Memory": {
+                "low": 5040,
+                "high": 0
+              },
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "EstimatedRows": 1,
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "DbHits": {
+                "low": 142,
+                "high": 0
+              },
+              "Rows": {
+                "low": 1,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 142,
+            "rows": 1,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "CartesianProduct@neo4j",
+                "identifiers": [
+                  "start",
+                  "end"
+                ],
+                "arguments": {
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 1,
+                  "DbHits": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 1,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 0,
+                "rows": 1,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "NodeIndexSeek@neo4j",
+                    "identifiers": [
+                      "start"
+                    ],
+                    "arguments": {
+                      "Details": "RANGE INDEX start:StableCoinAddress(addressId) WHERE addressId = $autostring_0",
+                      "Id": {
+                        "low": 5,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 1,
+                      "DbHits": {
+                        "low": 2,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 1,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 2,
+                    "rows": 1,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": []
+                  },
+                  {
+                    "operatorType": "NodeIndexSeek@neo4j",
+                    "identifiers": [
+                      "end"
+                    ],
+                    "arguments": {
+                      "Details": "RANGE INDEX end:StableCoinAddress(addressId) WHERE addressId = $autostring_1",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 1,
+                      "DbHits": {
+                        "low": 2,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 1,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 2,
+                    "rows": 1,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

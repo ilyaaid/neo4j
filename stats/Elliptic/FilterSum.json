@@ -1,0 +1,262 @@
+{
+  "duration": 0.7190477389991283,
+  "query": "PROFILE \n                    MATCH (n:EllipticTransaction)\n                    MATCH (n)-[r:EllipticEdge]->(m:EllipticTransaction)\n                    where m.size >= 226\n                    WITH n, COLLECT(m.size) AS neighbors\n                    RETURN elementId(n), REDUCE(total = 0, val IN neighbors | total + val);\n                ",
+  "profile": {
+    "operatorType": "ProduceResults@neo4j",
+    "identifiers": [
+      "n",
+      "neighbors",
+      "`elementId(n)`",
+      "`REDUCE(total = 0, val IN neighbors | total + val)`"
+    ],
+    "arguments": {
+      "GlobalMemory": {
+        "low": 43315872,
+        "high": 0
+      },
+      "planner-impl": "IDP",
+      "Memory": {
+        "low": 0,
+        "high": 0
+      },
+      "string-representation": "Cypher 5\n\nPlanner COST\n\nRuntime SLOTTED\n\nRuntime version 5.22\n\n+-----------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| Operator              | Id | Details                                                                                              | Estimated Rows | Rows   | DB Hits | Memory (Bytes) | Page Cache Hits/Misses |\n+-----------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +ProduceResults       |  0 | `elementId(n)`, `REDUCE(total = 0, val IN neighbors | total + val)`                                  |             84 | 137790 |       0 |              0 |                    0/0 |\n| |                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Projection           |  1 | elementId(n) AS `elementId(n)`, reduce(total = $autoint_1, val IN neighbors | total + val) AS `REDUC |             84 | 137790 |       0 |                |                    0/0 |\n| |                     |    | E(total = 0, val IN neighbors | total + val)`                                                        |                |        |         |                |                        |\n| |                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +EagerAggregation     |  2 | n, COLLECT(cache[m.size]) AS neighbors                                                               |             84 | 137790 |       0 |       43315808 |                    0/0 |\n| |                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Filter               |  3 | n:EllipticTransaction                                                                                |           7043 | 182376 |  182376 |                |                    0/0 |\n| |                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +Expand(All)          |  4 | (m)<-[r:EllipticEdge]-(n)                                                                            |           7043 | 182376 |  486162 |                |                    0/0 |\n| |                     +----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n| +NodeIndexSeekByRange |  5 | RANGE INDEX m:EllipticTransaction(size) WHERE size >= $autoint_0, cache[m.size]                      |           6124 | 135096 |  135097 |                |                    0/0 |\n+-----------------------+----+------------------------------------------------------------------------------------------------------+----------------+--------+---------+----------------+------------------------+\n\nTotal database accesses: 803635, total allocated memory: 43315872\n",
+      "runtime": "SLOTTED",
+      "runtime-impl": "SLOTTED",
+      "version": "5",
+      "DbHits": {
+        "low": 0,
+        "high": 0
+      },
+      "Details": "`elementId(n)`, `REDUCE(total = 0, val IN neighbors | total + val)`",
+      "planner-version": "5.22",
+      "runtime-version": "5.22",
+      "Id": {
+        "low": 0,
+        "high": 0
+      },
+      "EstimatedRows": 83.92267315966905,
+      "planner": "COST",
+      "PageCacheMisses": {
+        "low": 0,
+        "high": 0
+      },
+      "Rows": {
+        "low": 137790,
+        "high": 0
+      },
+      "PageCacheHits": {
+        "low": 0,
+        "high": 0
+      }
+    },
+    "dbHits": 0,
+    "rows": 137790,
+    "pageCacheMisses": 0,
+    "pageCacheHits": 0,
+    "pageCacheHitRatio": 0,
+    "time": 0,
+    "children": [
+      {
+        "operatorType": "Projection@neo4j",
+        "identifiers": [
+          "n",
+          "neighbors",
+          "`elementId(n)`",
+          "`REDUCE(total = 0, val IN neighbors | total + val)`"
+        ],
+        "arguments": {
+          "Details": "elementId(n) AS `elementId(n)`, reduce(total = $autoint_1, val IN neighbors | total + val) AS `REDUCE(total = 0, val IN neighbors | total + val)`",
+          "Id": {
+            "low": 1,
+            "high": 0
+          },
+          "PageCacheMisses": {
+            "low": 0,
+            "high": 0
+          },
+          "EstimatedRows": 83.92267315966905,
+          "DbHits": {
+            "low": 0,
+            "high": 0
+          },
+          "Rows": {
+            "low": 137790,
+            "high": 0
+          },
+          "PageCacheHits": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "dbHits": 0,
+        "rows": 137790,
+        "pageCacheMisses": 0,
+        "pageCacheHits": 0,
+        "pageCacheHitRatio": 0,
+        "time": 0,
+        "children": [
+          {
+            "operatorType": "EagerAggregation@neo4j",
+            "identifiers": [
+              "n",
+              "neighbors"
+            ],
+            "arguments": {
+              "Details": "n, COLLECT(cache[m.size]) AS neighbors",
+              "Memory": {
+                "low": 43315808,
+                "high": 0
+              },
+              "Id": {
+                "low": 2,
+                "high": 0
+              },
+              "EstimatedRows": 83.92267315966905,
+              "PageCacheMisses": {
+                "low": 0,
+                "high": 0
+              },
+              "DbHits": {
+                "low": 0,
+                "high": 0
+              },
+              "Rows": {
+                "low": 137790,
+                "high": 0
+              },
+              "PageCacheHits": {
+                "low": 0,
+                "high": 0
+              }
+            },
+            "dbHits": 0,
+            "rows": 137790,
+            "pageCacheMisses": 0,
+            "pageCacheHits": 0,
+            "pageCacheHitRatio": 0,
+            "time": 0,
+            "children": [
+              {
+                "operatorType": "Filter@neo4j",
+                "identifiers": [
+                  "m",
+                  "r",
+                  "n"
+                ],
+                "arguments": {
+                  "Details": "n:EllipticTransaction",
+                  "Id": {
+                    "low": 3,
+                    "high": 0
+                  },
+                  "PageCacheMisses": {
+                    "low": 0,
+                    "high": 0
+                  },
+                  "EstimatedRows": 7043.015070264636,
+                  "DbHits": {
+                    "low": 182376,
+                    "high": 0
+                  },
+                  "Rows": {
+                    "low": 182376,
+                    "high": 0
+                  },
+                  "PageCacheHits": {
+                    "low": 0,
+                    "high": 0
+                  }
+                },
+                "dbHits": 182376,
+                "rows": 182376,
+                "pageCacheMisses": 0,
+                "pageCacheHits": 0,
+                "pageCacheHitRatio": 0,
+                "time": 0,
+                "children": [
+                  {
+                    "operatorType": "Expand(All)@neo4j",
+                    "identifiers": [
+                      "m",
+                      "r",
+                      "n"
+                    ],
+                    "arguments": {
+                      "Details": "(m)<-[r:EllipticEdge]-(n)",
+                      "Id": {
+                        "low": 4,
+                        "high": 0
+                      },
+                      "PageCacheMisses": {
+                        "low": 0,
+                        "high": 0
+                      },
+                      "EstimatedRows": 7043.015070264636,
+                      "DbHits": {
+                        "low": 486162,
+                        "high": 0
+                      },
+                      "Rows": {
+                        "low": 182376,
+                        "high": 0
+                      },
+                      "PageCacheHits": {
+                        "low": 0,
+                        "high": 0
+                      }
+                    },
+                    "dbHits": 486162,
+                    "rows": 182376,
+                    "pageCacheMisses": 0,
+                    "pageCacheHits": 0,
+                    "pageCacheHitRatio": 0,
+                    "time": 0,
+                    "children": [
+                      {
+                        "operatorType": "NodeIndexSeekByRange@neo4j",
+                        "identifiers": [
+                          "m"
+                        ],
+                        "arguments": {
+                          "Details": "RANGE INDEX m:EllipticTransaction(size) WHERE size >= $autoint_0, cache[m.size]",
+                          "Id": {
+                            "low": 5,
+                            "high": 0
+                          },
+                          "PageCacheMisses": {
+                            "low": 0,
+                            "high": 0
+                          },
+                          "EstimatedRows": 6123.821287588294,
+                          "DbHits": {
+                            "low": 135097,
+                            "high": 0
+                          },
+                          "Rows": {
+                            "low": 135096,
+                            "high": 0
+                          },
+                          "PageCacheHits": {
+                            "low": 0,
+                            "high": 0
+                          }
+                        },
+                        "dbHits": 135097,
+                        "rows": 135096,
+                        "pageCacheMisses": 0,
+                        "pageCacheHits": 0,
+                        "pageCacheHitRatio": 0,
+                        "time": 0,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
